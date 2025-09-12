@@ -84,3 +84,42 @@ body{
   margin-right: 5%;
   
 }
+
+.header{
+  background-image: url('../pictures/mountainbg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 90vh;
+  background-position: center;
+  background-attachment: scroll;
+}
+
+.first{
+  padding-top: 10vh;
+  text-align: center;
+  margin-top: 0vh;
+  color: rgb(255, 242, 0);
+  font-size: 70px;
+  font-weight: bold;
+}
+.groupme{
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 50%;
+  flex-direction: column;
+}
+.importantinfo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nextmeeting{
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+}

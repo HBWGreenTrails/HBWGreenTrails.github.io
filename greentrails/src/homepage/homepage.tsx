@@ -3,14 +3,34 @@ import React from 'react';
 import Top from '../componets/header';
 import Treefooter from '../componets/footer';
 import Navbar from'../componets/sadnavbar';
+import groupmeImage from '../pictures/groupme.png';
+import { MeetingsList } from './meetings';
 
-    const Homepage: React.FC = () => {
+const Homepage: React.FC = () => {  
         return (
-            <div className="App-header">
-                <Navbar />
-                <Top message="HBW Green Trails" />
-                <Treefooter />
-            </div>
+                <div style={{backgroundColor: "rgb(17, 69, 59)"}}>
+                    <Navbar bgcolor='#00000000' boxShadow={false} />
+                    <div className="header">
+                    <h1 className='first'>HBW Green Trails Club</h1>
+                    </div>
+                    <div className='importantinfo'>
+                    <div className="groupme">
+                    <a href="https://groupme.com/join_group/103922254/4v3j7TI7"><img src={groupmeImage} alt="Join our GroupMe!" width="200px" /></a>
+                    <p>Click here to join our GroupMe for updates on meetings and events!!</p>
+                    </div>
+                    <div className='nextmeeting'>
+                        <h2>upcoming meetings:</h2>
+
+                        <MeetingsList nextMeetingDate={new Date('2025-09-11T12:35:00')} />
+                        
+                    </div>
+                    </div>
+                </div>
+            // <div className="App-header">
+            //     
+            //     <Top message="HBW Green Trails" />
+            //     <Treefooter />
+            // </div>
         )
     }
     
