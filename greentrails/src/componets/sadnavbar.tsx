@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
         boxShadow?: boolean;
     }
 
-    const Navbar: React.FC<NavbarProps> = ({ bgcolor = 'rgb(94, 136, 94)', boxShadow = true }) => {
+    const Navbar: React.FC<NavbarProps> = ({ bgcolor = 'rgb(94, 136, 94, 0)', boxShadow = false }) => {
         return (
             <div id='navbar' style={{ backgroundColor: bgcolor, boxShadow: boxShadow ? '0 4px 8px -2px #222' : 'none' }}>
                 <div className='link' id='homepage'><Link className="a" to="/HBWGreentrails/">home</Link></div>
