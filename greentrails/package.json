@@ -8,7 +8,7 @@
   "dev": "vite",
   "build": "vite build",
   "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist -b gh-pages --repo https://github.com/hbwgreentrails/hbwgreentrails.github.io.git"
+  "deploy": "gh-pages -d dist -b gh-pages"
 },
   "devDependencies": {
     "gh-pages": "^6.3.0",

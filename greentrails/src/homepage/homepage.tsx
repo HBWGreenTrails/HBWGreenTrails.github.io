@@ -19,7 +19,7 @@ const Homepage: React.FC = () => {
                     <p>Click here to join our GroupMe for updates on meetings and events!!</p>
                     </div>
                     <div className='nextmeeting'>
-                        <h2>upcoming meetings:</h2>
+                        <h2>Upcoming Meetings:</h2>
 
                         <MeetingsList nextMeetingDate={new Date('2025-09-11T12:35:00')} />
                         

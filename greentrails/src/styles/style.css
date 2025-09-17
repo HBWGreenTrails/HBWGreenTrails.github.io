@@ -100,6 +100,7 @@ body{
   text-align: center;
   margin-top: 0vh;
   color: rgb(255, 242, 0);
+  text-shadow: 2px 2px black;
   font-size: 70px;
   font-weight: bold;
 }
