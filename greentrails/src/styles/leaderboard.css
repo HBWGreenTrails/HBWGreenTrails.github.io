@@ -19,8 +19,9 @@
     /* border-radius: 15%; */
     border: 2px solid rgb(41, 67, 44);
     overflow-y: scroll;
-    max-width: 30vw;
-    min-width: fit-content;
+    max-width: 90vw;
+    min-width: 200px;
+    width: 30vw;
     height: 50vh;
 }
 
@@ -28,11 +29,13 @@
     width: 100%;
     grid-template-areas: "title" "leaderboard";
     text-align: center;
+    padding: 10px;
 }
 #events-title{
     grid-area: title;
     margin: auto;
     color: darkgreen;
+    font-size: clamp(1rem, 3vw, 1.5rem);
 }
 #events-leaderboard{
     margin: auto;
@@ -58,15 +61,49 @@
     width: 100%;
     grid-template-areas: "title" "leaderboard";
     text-align: center;
+    padding: 10px;
 }
 #santa-title{
     grid-area: title;
     margin: auto;
     color: darkgreen;
+    font-size: clamp(1rem, 3vw, 1.5rem);
 }
 #santa-leaderboard{
     margin: auto;
     grid-area: leaderboard;
+}
+
+/* Responsive leaderboard container */
+.leaderboard-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 60px 10px 20px 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .leaderboard-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .boardcon {
+        width: 85vw;
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .boardcon {
+        width: 90vw;
+        height: 40vh;
+    }
+    #events-table,
+    #santa-table {
+        padding: 5px;
+    }
 }
 
 /* Signup/Login Page Styles */
@@ -198,4 +235,30 @@
 
 .signup-toggle button:hover {
     color: #b0e5eb;
+}
+
+/* Responsive signup styles */
+@media screen and (max-width: 500px) {
+    .signup {
+        margin: 20px 10px;
+        padding: 25px 20px;
+        max-width: calc(100% - 20px);
+    }
+    .signup h3 {
+        font-size: 24px;
+    }
+    .signup input[type="text"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+    .signup button[type="submit"] {
+        padding: 12px;
+        font-size: 16px;
+    }
+    .signup-welcome {
+        padding: 25px 20px;
+    }
+    .signup-welcome h3 {
+        font-size: 28px;
+    }
 }

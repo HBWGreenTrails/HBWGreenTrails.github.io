@@ -1,27 +1,27 @@
 #navbar{
     position: fixed;
     top: 0; 
-    left: -1%;
+    left: 0;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     background-color: rgb(94, 136, 94);
     color: white;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding: 0 20px;
-    z-index: 1;
-    overflow: hidden;
+    padding: 0 10px;
+    z-index: 10;
     box-shadow: 0 4px 8px -2px #222;
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
 .link{
-    height: 100%;
-    width: fix-content;
-    padding: 0 20px;
+    height: 50px;
+    width: fit-content;
+    padding: 0 15px;
     transition: all .2s ease-out;
     align-items: center;
     text-align: center;
+    display: flex;
 }
 link{
     max-width: fit-content;
@@ -41,6 +41,7 @@ link{
     align-items: center;
     height: 100%;
     width: 100%;
+    font-size: 1rem;
 }
 a{
     text-decoration: none;
@@ -51,4 +52,19 @@ a{
 #homepagelink{
     
     
+}
+
+/* Mobile responsive navbar */
+@media screen and (max-width: 500px) {
+    #navbar {
+        justify-content: center;
+        padding: 5px;
+    }
+    .link {
+        padding: 0 8px;
+        height: 40px;
+    }
+    .a {
+        font-size: 0.85rem;
+    }
 }

@@ -87,16 +87,33 @@
     
     border-radius: 10%;
     top: 10%;
-    width: 70vw;
+    width: 85vw;
     height: fit-content;
-    left: calc(50% - 74vw/2);
+    left: calc(50% - 87vw/2);
     position: relative;
-    margin-top: 15vh;
-    margin-bottom: 15vh; 
+    margin-top: 10vh;
+    margin-bottom: 10vh; 
     text-align: center;
-    padding: 2vw;
+    padding: 3vw;
   }
   #fullroad{
     top: 70vh;
+  }
+  .trunk {
+    width: 30vw;
+  }
+  .volunteer-signup-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .box{
+    width: 90vw;
+    left: calc(50% - 92vw/2);
+    padding: 4vw;
+    border-radius: 5%;
+    min-height: 30vh;
   }
 }

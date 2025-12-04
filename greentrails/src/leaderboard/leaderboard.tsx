@@ -1,4 +1,5 @@
 import '../styles/style.css'
+import '../styles/leaderboard.css'
 import React from 'react';
 import Navbar from '../componets/sadnavbar';
 import { Link } from 'react-router-dom';
@@ -15,7 +16,7 @@ import {Cloudfooter} from '../componets/footer';
                 <Top message="Leaderboards" shadow={true} />
                 
                 <Navbar />
-                <div style={{ display: 'flex' , flexDirection:'row'}}>
+                <div className="leaderboard-container">
                 <Table />
                 <Meetingsboard />
                 <SantaLeaderboard />

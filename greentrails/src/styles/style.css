@@ -20,8 +20,10 @@
 }
 header{
   text-align: center;
-  font-size: 2.5em;
+  font-size: clamp(1.5rem, 5vw, 2.5em);
   z-index: 2;
+  padding: 0 1rem;
+  word-wrap: break-word;
 }
 footer{
   /* background-color: rgb(65, 86, 42); */
@@ -102,7 +104,7 @@ body{
   margin-top: 0vh;
   color: rgb(255, 242, 0);
   text-shadow: 2px 2px black;
-  font-size: 70px;
+  font-size: clamp(2rem, 8vw, 70px);
   font-weight: bold;
 }
 .groupme{
@@ -112,11 +114,14 @@ body{
   padding-bottom: 1rem;
   width: 50%;
   flex-direction: column;
+  align-items: center;
 }
 .importantinfo{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
 }
 .nextmeeting{
   text-align: center;
@@ -128,4 +133,21 @@ body{
 
 .cloudfooter{
 
+}
+
+/* Responsive styles for homepage */
+@media screen and (max-width: 768px) {
+  .first {
+    padding-top: 5vh;
+  }
+  .groupme {
+    width: 90%;
+  }
+  .importantinfo {
+    flex-direction: column;
+  }
+  .nextmeeting {
+    font-size: 16px;
+    padding: 0.5rem;
+  }
 }
