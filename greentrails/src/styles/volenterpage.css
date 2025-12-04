@@ -89,7 +89,7 @@
     top: 10%;
     width: 85vw;
     height: fit-content;
-    left: calc(50% - 87vw/2);
+    left: calc(50% - 85vw/2);
     position: relative;
     margin-top: 10vh;
     margin-bottom: 10vh; 
@@ -111,7 +111,7 @@
 @media screen and (max-width: 500px){
   .box{
     width: 90vw;
-    left: calc(50% - 92vw/2);
+    left: calc(50% - 90vw/2);
     padding: 4vw;
     border-radius: 5%;
     min-height: 30vh;
