@@ -6,9 +6,9 @@ import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Adddatapage from './adddata/adddatapage';
 import Leaderboard from './leaderboard/leaderboard';
 import Signup from './signup_page/signup';
-import SantaUpgrades from './santa/santaupgrades';
+import FireworkUpgrades from './fireworks/fireworkupgrades';
 import Icon from './componets/icon'
-import Snow from './componets/snow';
+import Fireworks from './componets/fireworks';
 import TabAlarm from './componets/tabAlarm';
 import { AuthProvider } from './context/AuthContext';
 import { NotificationContainer } from './componets/Notification';
@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <AuthProvider>
             <div className="App">
                 <Icon />
-                <Snow />
+                <Fireworks />
                 <TabAlarm />
                 <NotificationContainer />
                 <Router>
@@ -32,7 +32,7 @@ const App: React.FC = () => {
                         <Route path="/adddata/*" element={<Adddatapage />} />
                         <Route path="/leaderboard/*" element={<Leaderboard />} />
                         <Route path="/signup/*" element={<Signup />} /> 
-                        <Route path="/santa/*" element={<SantaUpgrades />} />
+                        <Route path="/fireworks/*" element={<FireworkUpgrades />} />
                     </Routes>
                 </Router>
             </div>

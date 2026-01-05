@@ -6,7 +6,7 @@ import table from './table';
 import Table from './table';
 import Top from '../componets/header';
 import Meetingsboard from './meetingsboard';
-import SantaLeaderboard from './santaboard';
+import FireworkLeaderboard from './fireworkboard';
 import {Cloudfooter} from '../componets/footer';
 
     const Leaderboard: React.FC = () => {
@@ -18,7 +18,7 @@ import {Cloudfooter} from '../componets/footer';
                 <div style={{ display: 'flex', flexDirection: 'row', position: 'relative', zIndex: 1 }}>
                 <Table />
                 <Meetingsboard />
-                <SantaLeaderboard />
+                <FireworkLeaderboard />
                 </div>
                 <Cloudfooter />
             </div>
