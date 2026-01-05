@@ -106,7 +106,7 @@ export default function Fireworks({
     // Update ref whenever currentUser changes
     useEffect(() => {
         currentUserRef.current = currentUser;
-        console.log('Snow: currentUser updated to:', currentUser);
+        console.log('Fireworks: currentUser updated to:', currentUser);
         
         // Load user upgrades when user changes
         if (currentUser) {

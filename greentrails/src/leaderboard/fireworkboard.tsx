@@ -35,7 +35,7 @@ const FireworkLeaderboard: React.FC = () => {
     }, []);
 
     return (
-        <div id='santa-table'>
+        <div id='firework-table'>
             <h3 id='firework-title'>Fireworks Popped</h3>
             <div id='firework-leaderboard' className='boardcon'> 
                 {leaderboardData.map((user, index) => (
