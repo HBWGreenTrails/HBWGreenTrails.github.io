@@ -464,11 +464,11 @@ export default function Fireworks({
                         try {
                             const userDocRef = doc(db, "Users", user);
                             updateDoc(userDocRef, {
-                                santasPopped: increment(points)
+                                fireworksPopped: increment(points)
                             }).then(() => {
                                 console.log(`firework popped! Count incremented by ${points} for ${user}`);
                                 // Dispatch custom event to notify other components
-                                window.dispatchEvent(new CustomEvent('santaPopped', { 
+                                window.dispatchEvent(new CustomEvent('fireworkPopped', { 
                                     detail: { increment: points } 
                                 }));
                             }).catch((error) => {
@@ -535,11 +535,11 @@ export default function Fireworks({
                         try {
                             const userDocRef = doc(db, "Users", user);
                             updateDoc(userDocRef, {
-                                santasPopped: increment(points)
+                                fireworksPopped: increment(points)
                             }).then(() => {
                                 console.log(`Auto-clicked firework for ${user} (worth: ${points})`);
                                 // Dispatch custom event to notify other components
-                                window.dispatchEvent(new CustomEvent('santaPopped', { 
+                                window.dispatchEvent(new CustomEvent('fireworkPopped', { 
                                     detail: { increment: points } 
                                 }));
                             }).catch((error) => {
