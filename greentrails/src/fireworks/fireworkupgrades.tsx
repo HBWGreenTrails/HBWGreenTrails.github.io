@@ -13,19 +13,19 @@ interface UserUpgrades {
     autoClickerLevel: number;
     spawnSpeedLevel: number;
     fireworkWorthLevel: number;
-    santasPopped: number;
+    fireworksPopped: number;
     luckyClickLevel: number;
     goldRushLevel: number;
     clickMultiplierLevel: number;
 }
 
-const SantaUpgrades: React.FC = () => {
+const FireworkUpgrades: React.FC = () => {
     const { currentUser } = useAuth();
     const [upgrades, setUpgrades] = useState<UserUpgrades>({
         autoClickerLevel: 0,
         spawnSpeedLevel: 0,
         fireworkWorthLevel: 0,
-        santasPopped: 0,
+        fireworksPopped: 0,
         luckyClickLevel: 0,
         goldRushLevel: 0,
         clickMultiplierLevel: 0
@@ -36,7 +36,7 @@ const SantaUpgrades: React.FC = () => {
     const autoClickerCosts = [10, 25, 50, 100, 200, 400, 800, 1600, 3200, 6400];
     // Spawn speed costs: Extended to 10 levels
     const spawnSpeedCosts = [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680];
-    // Santa worth costs: Extended to 10 levels
+    // Firework worth costs: Extended to 10 levels
     const fireworkWorthCosts = [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240];
     // Lucky Click costs: 5% chance per level to get double points
     const luckyClickCosts = [30, 75, 150, 300, 600, 1200, 2400, 4800, 9600, 19200];
@@ -52,20 +52,20 @@ const SantaUpgrades: React.FC = () => {
             setLoading(false);
         }
         
-        // Listen for santa pop events to update count in real-time
-        const handleSantaPopped = (event: Event) => {
+        // Listen for firework pop events to update count in real-time
+        const handleFireworkPopped = (event: Event) => {
             const customEvent = event as CustomEvent<{ increment: number }>;
             const increment = customEvent.detail?.increment || 1;
             setUpgrades(prev => ({
                 ...prev,
-                santasPopped: prev.santasPopped + increment
+                fireworksPopped: prev.fireworksPopped + increment
             }));
         };
         
-        window.addEventListener('santaPopped', handleSantaPopped);
+        window.addEventListener('fireworkPopped', handleFireworkPopped);
         
         return () => {
-            window.removeEventListener('santaPopped', handleSantaPopped);
+            window.removeEventListener('fireworkPopped', handleFireworkPopped);
         };
     }, [currentUser]);
 
@@ -82,7 +82,7 @@ const SantaUpgrades: React.FC = () => {
                     autoClickerLevel: userData.autoClickerLevel || 0,
                     spawnSpeedLevel: userData.spawnSpeedLevel || 0,
                     fireworkWorthLevel: userData.fireworkWorthLevel || 0,
-                    santasPopped: userData.santasPopped || 0,
+                    fireworksPopped: userData.fireworksPopped || 0,
                     luckyClickLevel: userData.luckyClickLevel || 0,
                     goldRushLevel: userData.goldRushLevel || 0,
                     clickMultiplierLevel: userData.clickMultiplierLevel || 0
@@ -108,22 +108,22 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = autoClickerCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 autoClickerLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 autoClickerLevel: upgrades.autoClickerLevel + 1
             });
             
@@ -147,22 +147,22 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = spawnSpeedCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 spawnSpeedLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 spawnSpeedLevel: upgrades.spawnSpeedLevel + 1
             });
             
@@ -173,7 +173,7 @@ const SantaUpgrades: React.FC = () => {
         }
     };
 
-    const purchaseSantaWorth = async () => {
+    const purchaseFireworkWorth = async () => {
         if (!currentUser) {
             showNotification("Please login to purchase upgrades!", "error");
             return;
@@ -186,26 +186,26 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = fireworkWorthCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 fireworkWorthLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 fireworkWorthLevel: upgrades.fireworkWorthLevel + 1
             });
             
-            showNotification(`Santa worth upgraded to level ${level + 1}!`, "success");
+            showNotification(`firework worth upgraded to level ${level + 1}!`, "success");
         } catch (error) {
             console.error("Error purchasing upgrade:", error);
             showNotification("Failed to purchase upgrade. Please try again.", "error");
@@ -225,22 +225,22 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = luckyClickCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 luckyClickLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 luckyClickLevel: upgrades.luckyClickLevel + 1
             });
             
@@ -264,22 +264,22 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = goldRushCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 goldRushLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 goldRushLevel: upgrades.goldRushLevel + 1
             });
             
@@ -303,22 +303,22 @@ const SantaUpgrades: React.FC = () => {
         }
 
         const cost = clickMultiplierCosts[level];
-        if (upgrades.santasPopped < cost) {
-            showNotification(`Not enough santas! You need ${cost} santas but only have ${upgrades.santasPopped}.`, "error");
+        if (upgrades.fireworksPopped < cost) {
+            showNotification(`Not enough fireworks! You need ${cost} fireworks but only have ${upgrades.fireworksPopped}.`, "error");
             return;
         }
 
         try {
             const userDocRef = doc(db, "Users", currentUser);
             await updateDoc(userDocRef, {
-                santasPopped: increment(-cost),
+                fireworksPopped: increment(-cost),
                 clickMultiplierLevel: increment(1)
             });
             
             // Update local state
             setUpgrades({
                 ...upgrades,
-                santasPopped: upgrades.santasPopped - cost,
+                fireworksPopped: upgrades.fireworksPopped - cost,
                 clickMultiplierLevel: upgrades.clickMultiplierLevel + 1
             });
             
@@ -395,7 +395,7 @@ const SantaUpgrades: React.FC = () => {
                     marginBottom: '30px',
                     fontStyle: 'italic'
                 }}>
-                    Upgrade your Santa-catching abilities!
+                    Upgrade your firework-catching abilities!
                 </p>
 
                 {/* Stats Section */}
@@ -424,9 +424,9 @@ const SantaUpgrades: React.FC = () => {
                             borderRadius: '10px',
                             border: '2px solid #d32f2f'
                         }}>
-                            <p style={{ fontSize: '20px', marginBottom: '8px', color: '#666' }}>🎆 Santas Available</p>
+                            <p style={{ fontSize: '20px', marginBottom: '8px', color: '#666' }}>🎆 Fireworks Available</p>
                             <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#d32f2f', margin: 0 }}>
-                                {upgrades.santasPopped}
+                                {upgrades.fireworksPopped}
                             </p>
                         </div>
                         <div style={{ 
@@ -436,7 +436,7 @@ const SantaUpgrades: React.FC = () => {
                             borderRadius: '10px',
                             border: '2px solid #2196F3'
                         }}>
-                            <p style={{ fontSize: '20px', marginBottom: '8px', color: '#666' }}>💎 Santa Value</p>
+                            <p style={{ fontSize: '20px', marginBottom: '8px', color: '#666' }}>💎 firework Value</p>
                             <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#2196F3', margin: 0 }}>
                                 {upgrades.fireworkWorthLevel + 1}x
                             </p>
@@ -478,7 +478,7 @@ const SantaUpgrades: React.FC = () => {
                             🖱️ Auto-Clicker
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Automatically clicks santas for you every few seconds! The ultimate passive income for lazy elves.
+                            Automatically clicks fireworks for you every few seconds! The ultimate passive income for party planners.
                             {upgrades.autoClickerLevel > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#4CAF50', fontWeight: 'bold' }}>
                                     ✓ Active: Clicking every {Math.max(2, 10 - upgrades.autoClickerLevel * 2)}s
@@ -494,22 +494,22 @@ const SantaUpgrades: React.FC = () => {
                                 </p>
                                 <button 
                                     onClick={purchaseAutoClicker}
-                                    disabled={upgrades.santasPopped < autoClickerCosts[upgrades.autoClickerLevel]}
+                                    disabled={upgrades.fireworksPopped < autoClickerCosts[upgrades.autoClickerLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? '#4CAF50' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? '#4CAF50' : '#ccc',
                                         color: 'white',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? '0 4px 8px rgba(76, 175, 80, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= autoClickerCosts[upgrades.autoClickerLevel] ? '0 4px 8px rgba(76, 175, 80, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= autoClickerCosts[upgrades.autoClickerLevel]) {
+                                        if (upgrades.fireworksPopped >= autoClickerCosts[upgrades.autoClickerLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -517,7 +517,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= autoClickerCosts[upgrades.autoClickerLevel]) {
+                                        if (upgrades.fireworksPopped >= autoClickerCosts[upgrades.autoClickerLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -570,7 +570,7 @@ const SantaUpgrades: React.FC = () => {
                             ⚡ Spawn Speed
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Increases how often santas appear on your screen! More santas = more opportunities to click.
+                            Increases how often fireworks appear on your screen! More fireworks = more opportunities to click.
                             {upgrades.spawnSpeedLevel > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#2196F3', fontWeight: 'bold' }}>
                                     ✓ Active: Spawn time reduced by {upgrades.spawnSpeedLevel * 20}%
@@ -586,22 +586,22 @@ const SantaUpgrades: React.FC = () => {
                                 </p>
                                 <button 
                                     onClick={purchaseSpawnSpeed}
-                                    disabled={upgrades.santasPopped < spawnSpeedCosts[upgrades.spawnSpeedLevel]}
+                                    disabled={upgrades.fireworksPopped < spawnSpeedCosts[upgrades.spawnSpeedLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? '#2196F3' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? '#2196F3' : '#ccc',
                                         color: 'white',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? '0 4px 8px rgba(33, 150, 243, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel] ? '0 4px 8px rgba(33, 150, 243, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel]) {
+                                        if (upgrades.fireworksPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -609,7 +609,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel]) {
+                                        if (upgrades.fireworksPopped >= spawnSpeedCosts[upgrades.spawnSpeedLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -677,23 +677,23 @@ const SantaUpgrades: React.FC = () => {
                                     </strong>
                                 </p>
                                 <button 
-                                    onClick={purchaseSantaWorth}
-                                    disabled={upgrades.santasPopped < fireworkWorthCosts[upgrades.fireworkWorthLevel]}
+                                    onClick={purchaseFireworkWorth}
+                                    disabled={upgrades.fireworksPopped < fireworkWorthCosts[upgrades.fireworkWorthLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? '#FF9800' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? '#FF9800' : '#ccc',
                                         color: 'white',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? '0 4px 8px rgba(255, 152, 0, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel] ? '0 4px 8px rgba(255, 152, 0, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel]) {
+                                        if (upgrades.fireworksPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -701,7 +701,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel]) {
+                                        if (upgrades.fireworksPopped >= fireworkWorthCosts[upgrades.fireworkWorthLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -770,22 +770,22 @@ const SantaUpgrades: React.FC = () => {
                                 </p>
                                 <button 
                                     onClick={purchaseLuckyClick}
-                                    disabled={upgrades.santasPopped < luckyClickCosts[upgrades.luckyClickLevel]}
+                                    disabled={upgrades.fireworksPopped < luckyClickCosts[upgrades.luckyClickLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? '#9C27B0' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? '#9C27B0' : '#ccc',
                                         color: 'white',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? '0 4px 8px rgba(156, 39, 176, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= luckyClickCosts[upgrades.luckyClickLevel] ? '0 4px 8px rgba(156, 39, 176, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= luckyClickCosts[upgrades.luckyClickLevel]) {
+                                        if (upgrades.fireworksPopped >= luckyClickCosts[upgrades.luckyClickLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -793,7 +793,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= luckyClickCosts[upgrades.luckyClickLevel]) {
+                                        if (upgrades.fireworksPopped >= luckyClickCosts[upgrades.luckyClickLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -849,7 +849,7 @@ const SantaUpgrades: React.FC = () => {
                             Occasionally spawn golden fireworks worth 5x normal points! Strike gold!
                             {upgrades.goldRushLevel > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#DAA520', fontWeight: 'bold' }}>
-                                    ✓ Active: {upgrades.goldRushLevel * 3}% chance for golden santa
+                                    ✓ Active: {upgrades.goldRushLevel * 3}% chance for golden firework
                                 </span>
                             )}
                         </p>
@@ -862,22 +862,22 @@ const SantaUpgrades: React.FC = () => {
                                 </p>
                                 <button 
                                     onClick={purchaseGoldRush}
-                                    disabled={upgrades.santasPopped < goldRushCosts[upgrades.goldRushLevel]}
+                                    disabled={upgrades.fireworksPopped < goldRushCosts[upgrades.goldRushLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= goldRushCosts[upgrades.goldRushLevel] ? '#FFD700' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= goldRushCosts[upgrades.goldRushLevel] ? '#FFD700' : '#ccc',
                                         color: '#333',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= goldRushCosts[upgrades.goldRushLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= goldRushCosts[upgrades.goldRushLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= goldRushCosts[upgrades.goldRushLevel] ? '0 4px 8px rgba(255, 215, 0, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= goldRushCosts[upgrades.goldRushLevel] ? '0 4px 8px rgba(255, 215, 0, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= goldRushCosts[upgrades.goldRushLevel]) {
+                                        if (upgrades.fireworksPopped >= goldRushCosts[upgrades.goldRushLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -885,7 +885,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= goldRushCosts[upgrades.goldRushLevel]) {
+                                        if (upgrades.fireworksPopped >= goldRushCosts[upgrades.goldRushLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -938,7 +938,7 @@ const SantaUpgrades: React.FC = () => {
                             ⚡ Click Multiplier
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Multiplies all your clicks! The ultimate power-up for serious santa hunters.
+                            Multiplies all your clicks! The ultimate power-up for serious firework hunters.
                             {upgrades.clickMultiplierLevel > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#E91E63', fontWeight: 'bold' }}>
                                     ✓ Active: {(1 + upgrades.clickMultiplierLevel * 0.1).toFixed(1)}x multiplier
@@ -954,22 +954,22 @@ const SantaUpgrades: React.FC = () => {
                                 </p>
                                 <button 
                                     onClick={purchaseClickMultiplier}
-                                    disabled={upgrades.santasPopped < clickMultiplierCosts[upgrades.clickMultiplierLevel]}
+                                    disabled={upgrades.fireworksPopped < clickMultiplierCosts[upgrades.clickMultiplierLevel]}
                                     style={{
                                         padding: '15px 25px',
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        backgroundColor: upgrades.santasPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? '#E91E63' : '#ccc',
+                                        backgroundColor: upgrades.fireworksPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? '#E91E63' : '#ccc',
                                         color: 'white',
                                         border: 'none',
                                         borderRadius: '8px',
-                                        cursor: upgrades.santasPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? 'pointer' : 'not-allowed',
+                                        cursor: upgrades.fireworksPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? 'pointer' : 'not-allowed',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        boxShadow: upgrades.santasPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? '0 4px 8px rgba(233, 30, 99, 0.3)' : 'none'
+                                        boxShadow: upgrades.fireworksPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel] ? '0 4px 8px rgba(233, 30, 99, 0.3)' : 'none'
                                     }}
                                     onMouseEnter={(e) => {
-                                        if (upgrades.santasPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel]) {
+                                        if (upgrades.fireworksPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -977,7 +977,7 @@ const SantaUpgrades: React.FC = () => {
                                         e.currentTarget.style.transform = 'scale(1)';
                                     }}
                                     onFocus={(e) => {
-                                        if (upgrades.santasPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel]) {
+                                        if (upgrades.fireworksPopped >= clickMultiplierCosts[upgrades.clickMultiplierLevel]) {
                                             e.currentTarget.style.transform = 'scale(1.05)';
                                         }
                                     }}
@@ -1025,8 +1025,8 @@ const SantaUpgrades: React.FC = () => {
                         <li><strong>Click flying Fireworks</strong> anywhere on the site to pop them and earn points!</li>
                         <li><strong>Spend your points</strong> on upgrades to become more efficient</li>
                         <li><strong>Auto-clicker</strong> works on ALL pages across the site automatically</li>
-                        <li><strong>Spawn speed</strong> increases how often Santas appear</li>
-                        <li><strong>Santa worth</strong> makes each click more valuable</li>
+                        <li><strong>Spawn speed</strong> increases how often Fireworks appear</li>
+                        <li><strong>firework worth</strong> makes each click more valuable</li>
                         <li><strong>Lucky click</strong> gives you a chance for double points</li>
                         <li><strong>Gold rush</strong> spawns special golden fireworks worth 5x points</li>
                         <li><strong>Click multiplier</strong> boosts all your clicks exponentially</li>
@@ -1039,4 +1039,4 @@ const SantaUpgrades: React.FC = () => {
     );
 };
 
-export default SantaUpgrades;
+export default FireworkUpgrades;

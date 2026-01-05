@@ -65,7 +65,7 @@ export default function Fireworks({
     
     // Constants for upgrade mechanics
     const GOLD_RUSH_CHANCE_PER_LEVEL = 0.03; // 3% per level
-    const GOLDEN_SANTA_MULTIPLIER = 5; // Golden santas worth 5x
+    const GOLDEN_FIREWORK_MULTIPLIER = 5; // Golden fireworks worth 5x
     const LUCKY_CLICK_CHANCE_PER_LEVEL = 0.05; // 5% per level
     const LUCKY_CLICK_MULTIPLIER = 2; // Lucky clicks worth 2x
     const CLICK_MULTIPLIER_PER_LEVEL = 0.1; // 10% per level (1 + level * 0.1)
@@ -76,7 +76,7 @@ export default function Fireworks({
     const dprRef = useRef<number>(1);
 
     const fireworkImageRef = useRef<HTMLImageElement | null>(null);
-    const fireworkSpritesRef = useRef<Santa[]>([]);
+    const fireworkSpritesRef = useRef<firework[]>([]);
     const spawnIntervalRef = useRef<number | null>(null);
     const autoClickerIntervalRef = useRef<number | null>(null);
 
@@ -92,13 +92,13 @@ export default function Fireworks({
     // Store user upgrades
     const [autoClickerLevel, setAutoClickerLevel] = useState(0);
     const [spawnSpeedLevel, setSpawnSpeedLevel] = useState(0);
-    const [santaWorthLevel, setSantaWorthLevel] = useState(0);
+    const [fireworkWorthLevel, setFireworkWorthLevel] = useState(0);
     const [luckyClickLevel, setLuckyClickLevel] = useState(0);
     const [goldRushLevel, setGoldRushLevel] = useState(0);
     const [clickMultiplierLevel, setClickMultiplierLevel] = useState(0);
     const autoClickerLevelRef = useRef(0);
     const spawnSpeedLevelRef = useRef(0);
-    const santaWorthLevelRef = useRef(0);
+    const fireworkWorthLevelRef = useRef(0);
     const luckyClickLevelRef = useRef(0);
     const goldRushLevelRef = useRef(0);
     const clickMultiplierLevelRef = useRef(0);
@@ -114,13 +114,13 @@ export default function Fireworks({
         } else {
             setAutoClickerLevel(0);
             setSpawnSpeedLevel(0);
-            setSantaWorthLevel(0);
+            setFireworkWorthLevel(0);
             setLuckyClickLevel(0);
             setGoldRushLevel(0);
             setClickMultiplierLevel(0);
             autoClickerLevelRef.current = 0;
             spawnSpeedLevelRef.current = 0;
-            santaWorthLevelRef.current = 0;
+            fireworkWorthLevelRef.current = 0;
             luckyClickLevelRef.current = 0;
             goldRushLevelRef.current = 0;
             clickMultiplierLevelRef.current = 0;
@@ -131,11 +131,11 @@ export default function Fireworks({
     useEffect(() => {
         autoClickerLevelRef.current = autoClickerLevel;
         spawnSpeedLevelRef.current = spawnSpeedLevel;
-        santaWorthLevelRef.current = santaWorthLevel;
+        fireworkWorthLevelRef.current = fireworkWorthLevel;
         luckyClickLevelRef.current = luckyClickLevel;
         goldRushLevelRef.current = goldRushLevel;
         clickMultiplierLevelRef.current = clickMultiplierLevel;
-    }, [autoClickerLevel, spawnSpeedLevel, santaWorthLevel, luckyClickLevel, goldRushLevel, clickMultiplierLevel]);
+    }, [autoClickerLevel, spawnSpeedLevel, fireworkWorthLevel, luckyClickLevel, goldRushLevel, clickMultiplierLevel]);
     
     const loadUserUpgrades = async () => {
         if (!currentUser) return;
@@ -148,13 +148,13 @@ export default function Fireworks({
                 const userData = userDoc.data();
                 const autoLevel = userData.autoClickerLevel || 0;
                 const spawnLevel = userData.spawnSpeedLevel || 0;
-                const worthLevel = userData.santaWorthLevel || 0;
+                const worthLevel = userData.fireworkWorthLevel || 0;
                 const luckyLevel = userData.luckyClickLevel || 0;
                 const goldLevel = userData.goldRushLevel || 0;
                 const multiplierLevel = userData.clickMultiplierLevel || 0;
                 setAutoClickerLevel(autoLevel);
                 setSpawnSpeedLevel(spawnLevel);
-                setSantaWorthLevel(worthLevel);
+                setFireworkWorthLevel(worthLevel);
                 setLuckyClickLevel(luckyLevel);
                 setGoldRushLevel(goldLevel);
                 setClickMultiplierLevel(multiplierLevel);
@@ -177,9 +177,9 @@ export default function Fireworks({
         let points = basePoints;
         let isLucky = false;
         
-        // Gold Rush: Golden santas are worth 5x
+        // Gold Rush: Golden fireworks are worth 5x
         if (isGolden) {
-            points *= GOLDEN_SANTA_MULTIPLIER;
+            points *= GOLDEN_FIREWORK_MULTIPLIER;
         }
         
         // Lucky Click: Chance per level for double points
@@ -203,7 +203,7 @@ export default function Fireworks({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // small inline SVG Santa to avoid external assets
+        // small inline SVG firework to avoid external assets
         const fireworkImg = new Image();
         fireworkImg.src = `data:image/svg+xml;charset=utf-8,${fireworkSVG}`;
         fireworkImageRef.current = fireworkImg;
@@ -281,8 +281,8 @@ export default function Fireworks({
 
             // draw fireworks
             const fireworks = fireworkSpritesRef.current;
-            for (let i = santas.length - 1; i >= 0; i--) {
-                const s = santas[i];
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                const s = fireworks[i];
                 s.x += s.vx * dt;
                 // small bobbing
                 const bob = Math.sin((time / 400) + s.x * 0.02) * 6 * s.scale;
@@ -296,13 +296,13 @@ export default function Fireworks({
                         ctx.scale(-1, 1);
                     }
                     
-                    // Apply golden filter for golden santas
+                    // Apply golden filter for golden fireworks
                     if (s.isGolden) {
                         // Add a golden glow effect
                         ctx.shadowColor = "#FFD700";
                         ctx.shadowBlur = 20;
                         ctx.globalAlpha = 1;
-                        // Tint the santa golden
+                        // Tint the firework golden
                         ctx.filter = "sepia(1) saturate(3) hue-rotate(10deg) brightness(1.3)";
                     }
                     
@@ -322,8 +322,8 @@ export default function Fireworks({
                 }
 
                 // remove when offscreen beyond margin
-                if (s.dir === 1 && s.x - s.w / 2 > w + 50) santas.splice(i, 1);
-                if (s.dir === -1 && s.x + s.w / 2 < -50) santas.splice(i, 1);
+                if (s.dir === 1 && s.x - s.w / 2 > w + 50) fireworks.splice(i, 1);
+                if (s.dir === -1 && s.x + s.w / 2 < -50) fireworks.splice(i, 1);
             }
 
             // update & draw explosions
@@ -356,7 +356,7 @@ export default function Fireworks({
             rafRef.current = requestAnimationFrame(render);
         };
 
-        // spawn a santa sprite occasionally
+        // spawn a firework sprite occasionally
         const spawnSanta = () => {
             const w = canvas.width / dprRef.current;
             const h = canvas.height / dprRef.current;
@@ -371,7 +371,7 @@ export default function Fireworks({
             // velocity in logical px per frame (normalized dt). Adjust with speed prop.
             const vx = (2 + Math.random() * 2) * (dir === 1 ? 1 : -1) * Math.max(0.5, speed);
             
-            // Gold Rush: Determine if this santa should be golden
+            // Gold Rush: Determine if this firework should be golden
             const goldRushChance = goldRushLevelRef.current * GOLD_RUSH_CHANCE_PER_LEVEL;
             const isGolden = Math.random() < goldRushChance;
             
@@ -385,7 +385,7 @@ export default function Fireworks({
                 h: baseH * scale,
                 isGolden,
             };
-            fireworkSpritesRef.current.push(santa);
+            fireworkSpritesRef.current.push(firework);
         };
 
         // new: spawn explosion at x,y (logical coords)
@@ -414,7 +414,7 @@ export default function Fireworks({
             explosionsRef.current.push(...parts);
         };
 
-        // click handler to explode santas
+        // click handler to explode fireworks
         const onClick = (e: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX - rect.left);
@@ -423,32 +423,32 @@ export default function Fireworks({
             
             // Use ref to get current user value (not closure)
             const user = currentUserRef.current;
-            console.log('Santa click detected. Current user:', user);
+            console.log('firework click detected. Current user:', user);
             
-            // iterate in reverse to remove hit santa
-            for (let i = santas.length - 1; i >= 0; i--) {
-                const s = santas[i];
+            // iterate in reverse to remove hit firework
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                const s = fireworks[i];
                 const dx = x - s.x;
                 const dy = y - s.y;
                 const r = Math.max(s.w, s.h) * 0.6; // hit radius
                 if (dx * dx + dy * dy <= r * r) {
-                    // spawn explosion using santa's position and color based on type
+                    // spawn explosion using firework's position and color based on type
                     const explosionColor = s.isGolden ? "#FFD700" : "#ffb347";
                     spawnExplosion(s.x, s.y, explosionColor);
-                    santas.splice(i, 1);
+                    fireworks.splice(i, 1);
                     
-                    // Increment santa count for logged-in user
+                    // Increment firework count for logged-in user
                     if (user) {
-                        console.log('User is logged in, incrementing santa count for:', user);
+                        console.log('User is logged in, incrementing firework count for:', user);
                         
-                        // Calculate points for this santa pop using helper function
-                        // Base worth is (santaWorthLevel + 1), so level 0 = 1 point, level 1 = 2 points, etc.
-                        const basePoints = santaWorthLevelRef.current + 1;
+                        // Calculate points for this firework pop using helper function
+                        // Base worth is (fireworkWorthLevel + 1), so level 0 = 1 point, level 1 = 2 points, etc.
+                        const basePoints = fireworkWorthLevelRef.current + 1;
                         const { points, isLucky } = calculateUpgradePoints(basePoints, s.isGolden);
                         
                         // Show visual feedback
                         if (s.isGolden) {
-                            console.log('Golden santa clicked! 5x multiplier applied');
+                            console.log('Golden firework clicked! 5x multiplier applied');
                         }
                         if (isLucky) {
                             console.log('Lucky click! 2x multiplier applied');
@@ -466,20 +466,20 @@ export default function Fireworks({
                             updateDoc(userDocRef, {
                                 santasPopped: increment(points)
                             }).then(() => {
-                                console.log(`Santa popped! Count incremented by ${points} for ${user}`);
+                                console.log(`firework popped! Count incremented by ${points} for ${user}`);
                                 // Dispatch custom event to notify other components
                                 window.dispatchEvent(new CustomEvent('santaPopped', { 
                                     detail: { increment: points } 
                                 }));
                             }).catch((error) => {
-                                console.error("Error updating santa count:", error);
+                                console.error("Error updating firework count:", error);
                                 showNotification(`Failed to save Firework pop. Error: ${error.message}`, "error");
                             });
                         } catch (error) {
                             console.error("Error creating update:", error);
                         }
                     } else {
-                        console.log("No user logged in - santa pop not tracked");
+                        console.log("No user logged in - firework pop not tracked");
                         // Show a one-time notification to inform user they need to login
                         if (!sessionStorage.getItem('loginReminderShown')) {
                             showNotification('🎆 Login required! Go to the Sign Up page to login or create an account, then your Firework pops will be tracked on the leaderboard!', "info");
@@ -515,20 +515,20 @@ export default function Fireworks({
             
             autoClickerIntervalRef.current = window.setInterval(() => {
                 const fireworks = fireworkSpritesRef.current;
-                if (santas.length > 0 && currentUserRef.current) {
-                    // Auto-click a random santa
-                    const randomIndex = Math.floor(Math.random() * santas.length);
-                    const s = santas[randomIndex];
+                if (fireworks.length > 0 && currentUserRef.current) {
+                    // Auto-click a random firework
+                    const randomIndex = Math.floor(Math.random() * fireworks.length);
+                    const s = fireworks[randomIndex];
                     
-                    // Spawn explosion and remove santa
+                    // Spawn explosion and remove firework
                     const explosionColor = s.isGolden ? "#FFD700" : "#4CAF50";
                     spawnExplosion(s.x, s.y, explosionColor); // Green for auto-click, gold for golden
-                    santas.splice(randomIndex, 1);
+                    fireworks.splice(randomIndex, 1);
                     
-                    // Calculate points for auto-clicked santa using helper function
+                    // Calculate points for auto-clicked firework using helper function
                     const user = currentUserRef.current;
-                    // Base worth is (santaWorthLevel + 1), so level 0 = 1 point, level 1 = 2 points, etc.
-                    const basePoints = santaWorthLevelRef.current + 1;
+                    // Base worth is (fireworkWorthLevel + 1), so level 0 = 1 point, level 1 = 2 points, etc.
+                    const basePoints = fireworkWorthLevelRef.current + 1;
                     const { points } = calculateUpgradePoints(basePoints, s.isGolden);
                     
                     if (user) {
@@ -537,13 +537,13 @@ export default function Fireworks({
                             updateDoc(userDocRef, {
                                 santasPopped: increment(points)
                             }).then(() => {
-                                console.log(`Auto-clicked santa for ${user} (worth: ${points})`);
+                                console.log(`Auto-clicked firework for ${user} (worth: ${points})`);
                                 // Dispatch custom event to notify other components
                                 window.dispatchEvent(new CustomEvent('santaPopped', { 
                                     detail: { increment: points } 
                                 }));
                             }).catch((error) => {
-                                console.error("Error updating santa count:", error);
+                                console.error("Error updating firework count:", error);
                             });
                         } catch (error) {
                             console.error("Error with auto-click:", error);
@@ -556,7 +556,7 @@ export default function Fireworks({
         const onResize = () => {
             setSize();
             initParticles();
-            // clear current santas so they re-enter reasonably positioned
+            // clear current fireworks so they re-enter reasonably positioned
             fireworkSpritesRef.current = [];
         };
         window.addEventListener("resize", onResize);
@@ -572,7 +572,7 @@ export default function Fireworks({
             window.removeEventListener("resize", onResize);
             window.removeEventListener("click", onClick);
         };
-    }, [particleCount, speed, size, color, autoClickerLevel, spawnSpeedLevel, santaWorthLevel, luckyClickLevel, goldRushLevel, clickMultiplierLevel]);
+    }, [particleCount, speed, size, color, autoClickerLevel, spawnSpeedLevel, fireworkWorthLevel, luckyClickLevel, goldRushLevel, clickMultiplierLevel]);
 
     return (
         <canvas
