@@ -11,6 +11,7 @@ import BettingPage from './betting/bettingpage';
 import MessagingPage from './messaging/messagingpage';
 import PrestigePage from './prestige/prestigepage';
 import PrestigeShop from './prestige/prestigeshop';
+import StocksPage from './stocks/stockspage';
 import Icon from './componets/icon'
 import Snow from './componets/snow';
 import MultipleTabDetector from './componets/tabAlarm';
@@ -41,6 +42,7 @@ const App: React.FC = () => {
                         <Route path="/betting/*" element={<BettingPage />} />
                         <Route path="/prestige/*" element={<PrestigePage />} />
                         <Route path="/prestigeshop/*" element={<PrestigeShop />} />
+                        <Route path="/stocks/*" element={<StocksPage />} />
                     </Routes>
                 </Router>
             </div>
