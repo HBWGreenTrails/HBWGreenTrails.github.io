@@ -39,6 +39,12 @@ const StocksPage: React.FC = () => {
     const updateIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const lastUpdateRef = useRef<Date>(new Date());
 
+    // Constants
+    const STOCK_CACHE_LIFETIME_MS = 30000; // 30 seconds
+    const TRANSACTION_FEE_RATE = 0.01; // 1% fee
+    const MIN_STOCK_PRICE = 10; // Minimum price floor
+    const PRICE_UPDATE_INTERVAL_MS = 10000; // Update every 10 seconds
+
     // Initial stock data - these will fluctuate over time
     const initialStocks: Stock[] = [
         { ticker: 'GRNT', name: 'GreenTrails Tech', price: 100, change: 0, changePercent: 0 },
@@ -47,6 +53,9 @@ const StocksPage: React.FC = () => {
         { ticker: 'LEAF', name: 'Leaf Energy', price: 75, change: 0, changePercent: 0 },
         { ticker: 'TREE', name: 'TreeCorp', price: 200, change: 0, changePercent: 0 },
     ];
+
+    // Valid stock tickers for security
+    const VALID_TICKERS = ['GRNT', 'ECOF', 'NATX', 'LEAF', 'TREE'];
 
     useEffect(() => {
         if (currentUser) {
@@ -96,8 +105,8 @@ const StocksPage: React.FC = () => {
         
         if (savedStocks && savedTimestamp) {
             const timeDiff = Date.now() - parseInt(savedTimestamp);
-            // If saved data is less than 30 seconds old, use it
-            if (timeDiff < 30000) {
+            // If saved data is less than cache lifetime, use it
+            if (timeDiff < STOCK_CACHE_LIFETIME_MS) {
                 setStocks(JSON.parse(savedStocks));
                 return;
             }
@@ -114,10 +123,10 @@ const StocksPage: React.FC = () => {
     };
 
     const startPriceUpdates = () => {
-        // Update prices every 10 seconds
+        // Update prices at regular intervals
         updateIntervalRef.current = setInterval(() => {
             updateStockPrices();
-        }, 10000);
+        }, PRICE_UPDATE_INTERVAL_MS);
     };
 
     const updateStockPrices = () => {
@@ -126,7 +135,7 @@ const StocksPage: React.FC = () => {
                 // Random price change between -5% and +5%
                 const changePercent = (Math.random() - 0.5) * 10;
                 const priceChange = stock.price * (changePercent / 100);
-                const newPrice = Math.max(10, stock.price + priceChange); // Minimum price of 10
+                const newPrice = Math.max(MIN_STOCK_PRICE, stock.price + priceChange);
                 
                 return {
                     ...stock,
@@ -148,6 +157,12 @@ const StocksPage: React.FC = () => {
             return;
         }
 
+        // Validate ticker against whitelist for security
+        if (!VALID_TICKERS.includes(selectedStock.ticker)) {
+            showNotification("Invalid stock ticker", "error");
+            return;
+        }
+
         const amount = parseInt(tradeAmount);
         if (isNaN(amount) || amount <= 0) {
             showNotification("Please enter a valid amount", "error");
@@ -155,7 +170,7 @@ const StocksPage: React.FC = () => {
         }
 
         const totalCost = selectedStock.price * amount;
-        const fee = Math.ceil(totalCost * 0.01); // 1% transaction fee
+        const fee = Math.ceil(totalCost * TRANSACTION_FEE_RATE);
         
         try {
             const userDocRef = doc(db, "Users", currentUser);
@@ -350,12 +365,12 @@ const StocksPage: React.FC = () => {
                                 <div className="trade-summary">
                                     <p>Price per share: {selectedStock.price.toFixed(2)} fireworks</p>
                                     <p>Total: {Math.round(selectedStock.price * parseInt(tradeAmount))} fireworks</p>
-                                    <p>Fee (1%): {Math.ceil(selectedStock.price * parseInt(tradeAmount) * 0.01)} fireworks</p>
+                                    <p>Fee ({(TRANSACTION_FEE_RATE * 100).toFixed(0)}%): {Math.ceil(selectedStock.price * parseInt(tradeAmount) * TRANSACTION_FEE_RATE)} fireworks</p>
                                     <p className="trade-total">
                                         {tradeType === 'buy' ? 'Total Cost' : 'You Receive'}: {' '}
                                         {tradeType === 'buy' 
-                                            ? Math.round(selectedStock.price * parseInt(tradeAmount) * 1.01)
-                                            : Math.round(selectedStock.price * parseInt(tradeAmount) * 0.99)
+                                            ? Math.round(selectedStock.price * parseInt(tradeAmount) * (1 + TRANSACTION_FEE_RATE))
+                                            : Math.round(selectedStock.price * parseInt(tradeAmount) * (1 - TRANSACTION_FEE_RATE))
                                         } fireworks
                                     </p>
                                 </div>
