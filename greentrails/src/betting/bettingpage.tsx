@@ -572,7 +572,7 @@ const BettingPage: React.FC = () => {
                                 value={newBetType}
                                 onChange={(e) => setNewBetType(e.target.value as any)}
                             >
-                                <option value="fireworks_race">Shamrocks Race (Most Fireworks Wins)</option>
+                                <option value="fireworks_race">Shamrocks Race (Most Shamrocks Wins)</option>
                                 <option value="leaderboard_position">Leaderboard Position (Highest Score)</option>
                                 <option value="score_milestone">Score Milestone (First to Reach Target)</option>
                             </select>
