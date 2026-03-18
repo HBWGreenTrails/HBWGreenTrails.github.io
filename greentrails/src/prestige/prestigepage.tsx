@@ -284,7 +284,7 @@ const PrestigePage: React.FC = () => {
                             borderRadius: '10px',
                             border: '2px solid #f57c00'
                         }}>
-                            <p style={{ fontSize: '16px', marginBottom: '8px', color: '#666' }}>Current Fireworks</p>
+                            <p style={{ fontSize: '16px', marginBottom: '8px', color: '#666' }}>Current Shamrocks</p>
                             <p style={{ fontSize: '36px', fontWeight: 'bold', color: '#f57c00', margin: 0 }}>
                                 {userData?.santasPopped || 0}
                             </p>
@@ -324,10 +324,10 @@ const PrestigePage: React.FC = () => {
                     <div style={{ lineHeight: '1.8', color: '#555', fontSize: '16px' }}>
                         <p><strong>🔄 How it works:</strong></p>
                         <ul style={{ paddingLeft: '30px', marginBottom: '20px' }}>
-                            <li>Requires <strong>{PRESTIGE_REQUIREMENT.toLocaleString()}</strong> fireworks to prestige</li>
-                            <li>Earn <strong>1 Prestige Point</strong> per 10,000 fireworks</li>
+                            <li>Requires <strong>{PRESTIGE_REQUIREMENT.toLocaleString()}</strong> shamrocks to prestige</li>
+                            <li>Earn <strong>1 Prestige Point</strong> per 10,000 shamrocks</li>
                             <li>All shop upgrades are reset to level 0</li>
-                            <li>Your fireworks are reset to 0</li>
+                            <li>Your shamrocks are reset to 0</li>
                             <li>Prestige Level and Prestige Points are permanent</li>
                         </ul>
                         
@@ -368,7 +368,7 @@ const PrestigePage: React.FC = () => {
                                     ⚠️ Not ready to prestige yet
                                 </p>
                                 <p style={{ color: '#555' }}>
-                                    You need <strong>{(PRESTIGE_REQUIREMENT - (userData?.santasPopped || 0)).toLocaleString()}</strong> more fireworks to prestige.
+                                    You need <strong>{(PRESTIGE_REQUIREMENT - (userData?.santasPopped || 0)).toLocaleString()}</strong> more shamrocks to prestige.
                                 </p>
                             </div>
                         )}
@@ -427,7 +427,7 @@ const PrestigePage: React.FC = () => {
                                 e.currentTarget.style.transform = 'scale(1)';
                             }}
                         >
-                            🎆 Back to Shop
+                            🍀 Back to Shop
                         </button>
                         
                         <button
@@ -489,7 +489,7 @@ const PrestigePage: React.FC = () => {
                                 ) : (
                                     <li>Reset all shop upgrades to level 0</li>
                                 )}
-                                <li>Reset your fireworks to 0</li>
+                                <li>Reset your shamrocks to 0</li>
                             </ul>
                             <p style={{ fontSize: '18px', color: '#2e7d32', marginBottom: '30px', fontWeight: 'bold' }}>
                                 You will gain: {prestigePointsToGain} Prestige Point{prestigePointsToGain !== 1 ? 's' : ''}

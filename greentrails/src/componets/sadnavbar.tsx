@@ -18,7 +18,7 @@ import { useAuth } from '../context/AuthContext';
                 <div className='link' id='volunteer'><Link className="a" to="/volenterpage/">Volunteer!!</Link></div>
                 <div className='link' id='leaderboard'><Link className="a" to="/leaderboard/">Leaderboards</Link></div>
                 <div className='link' id='messaging'><Link className="a" to="/messaging/">🌿 Nature Discussion Zone</Link></div>
-                <div className='link' id='santa'><Link className="a" to="/santa/">🎆 New Year's</Link></div>
+                <div className='link' id='santa'><Link className="a" to="/santa/">🍀 St. Patrick's Day</Link></div>
                 <div className='link' id='prestige'><Link className="a" to="/prestige/">🌟 Prestige</Link></div>
                 {/* Betting page hidden from navigation but still accessible via direct URL */}
                 {/* <div className='link' id='betting'><Link className="a" to="/betting/">🎲 Betting</Link></div> */}
