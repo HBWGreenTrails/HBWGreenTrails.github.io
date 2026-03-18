@@ -286,13 +286,13 @@ const PrestigeShop: React.FC = () => {
                             Level {upgrades?.prestigeFireworkMultiplier || 0}/{MAX_FIREWORK_MULTIPLIER}
                         </div>
                         <h3 style={{ color: '#4CAF50', marginBottom: '15px', fontSize: '28px', fontWeight: 'bold' }}>
-                            🎯 Firework Multiplier
+                            🎯 Shamrock Multiplier
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Permanently increases all firework gains by 10% per level. Stacks with everything!
+                            Permanently increases all shamrock gains by 10% per level. Stacks with everything!
                             {(upgrades?.prestigeFireworkMultiplier || 0) > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#4CAF50', fontWeight: 'bold' }}>
-                                    ✓ Active: +{(upgrades?.prestigeFireworkMultiplier || 0) * 10}% firework gain
+                                    ✓ Active: +{(upgrades?.prestigeFireworkMultiplier || 0) * 10}% shamrock gain
                                 </span>
                             )}
                         </p>
@@ -368,7 +368,7 @@ const PrestigeShop: React.FC = () => {
                             🤖 Auto-Clicker Boost
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Makes your auto-clicker 20% faster per level. More clicks = more fireworks!
+                            Makes your auto-clicker 20% faster per level. More clicks = more shamrocks!
                             {(upgrades?.prestigeAutoClickerBoost || 0) > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#2196F3', fontWeight: 'bold' }}>
                                     ✓ Active: +{(upgrades?.prestigeAutoClickerBoost || 0) * 20}% auto-clicker speed
@@ -447,7 +447,7 @@ const PrestigeShop: React.FC = () => {
                             ⚡ Spawn Rate Boost
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Increases firework spawn rate by 15% per level. More fireworks on screen!
+                            Increases shamrock spawn rate by 15% per level. More shamrocks on screen!
                             {(upgrades?.prestigeSpawnBoost || 0) > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#FF9800', fontWeight: 'bold' }}>
                                     ✓ Active: +{(upgrades?.prestigeSpawnBoost || 0) * 15}% spawn rate
@@ -684,7 +684,7 @@ const PrestigeShop: React.FC = () => {
                             🌟 Gold Rush Boost
                         </h3>
                         <p style={{ marginBottom: '15px', color: '#555', lineHeight: '1.6', minHeight: '80px' }}>
-                            Increases golden firework spawn chance by 5% per level. Strike gold more often!
+                            Increases golden shamrock spawn chance by 5% per level. Strike gold more often!
                             {(upgrades?.prestigeGoldBoost || 0) > 0 && (
                                 <span style={{ display: 'block', marginTop: '10px', color: '#E91E63', fontWeight: 'bold' }}>
                                     ✓ Active: +{(upgrades?.prestigeGoldBoost || 0) * 5}% gold spawn chance
@@ -783,7 +783,7 @@ const PrestigeShop: React.FC = () => {
                             e.currentTarget.style.transform = 'scale(1)';
                         }}
                     >
-                        🎆 Regular Shop
+                        🍀 Regular Shop
                     </button>
                 </div>
 

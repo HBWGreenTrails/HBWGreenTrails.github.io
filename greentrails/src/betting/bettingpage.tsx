@@ -253,7 +253,7 @@ const BettingPage: React.FC = () => {
                 });
             });
 
-            showNotification(`Bet accepted! ${bet.wager} fireworks wagered.`, "success");
+            showNotification(`Bet accepted! ${bet.wager} shamrocks wagered.`, "success");
             loadBets();
             loadUserFireworks();
         } catch (error) {
@@ -433,7 +433,7 @@ const BettingPage: React.FC = () => {
                 });
             });
 
-            showNotification(`${winner} won ${payout} fireworks!`, "success");
+            showNotification(`${winner} won ${payout} shamrocks!`, "success");
             loadBets();
             loadUserFireworks();
         } catch (error) {
@@ -499,7 +499,7 @@ const BettingPage: React.FC = () => {
                 });
             });
 
-            showNotification("Bet cancelled and fireworks refunded", "success");
+            showNotification("Bet cancelled and shamrocks refunded", "success");
             loadBets();
             loadUserFireworks();
         } catch (error) {
@@ -543,7 +543,7 @@ const BettingPage: React.FC = () => {
                     <h2>🎲 Place Your Bets! 🎲</h2>
                     {currentUser && (
                         <div className="user-fireworks">
-                            <span>🎆 Your Fireworks: <strong>{userFireworks}</strong></span>
+                            <span>🍀 Your Shamrocks: <strong>{userFireworks}</strong></span>
                         </div>
                     )}
                 </div>
@@ -561,7 +561,7 @@ const BettingPage: React.FC = () => {
                             <input
                                 type="text"
                                 className="bet-input"
-                                placeholder="Bet description (e.g., 'Race to 1000 fireworks')"
+                                placeholder="Bet description (e.g., 'Race to 1000 shamrocks')"
                                 value={newBetDescription}
                                 onChange={(e) => setNewBetDescription(e.target.value)}
                                 maxLength={200}
@@ -572,7 +572,7 @@ const BettingPage: React.FC = () => {
                                 value={newBetType}
                                 onChange={(e) => setNewBetType(e.target.value as any)}
                             >
-                                <option value="fireworks_race">Fireworks Race (Most Fireworks Wins)</option>
+                                <option value="fireworks_race">Shamrocks Race (Most Shamrocks Wins)</option>
                                 <option value="leaderboard_position">Leaderboard Position (Highest Score)</option>
                                 <option value="score_milestone">Score Milestone (First to Reach Target)</option>
                             </select>
@@ -681,7 +681,7 @@ const BettingPage: React.FC = () => {
                                     </div>
 
                                     <div className="bet-wager">
-                                        <span>🎆 Wager: <strong>{bet.wager}</strong> fireworks each</span>
+                                        <span>🍀 Wager: <strong>{bet.wager}</strong> shamrocks each</span>
                                         <span className="bet-potential">
                                             💰 Win: <strong>{Math.floor(bet.wager * (1 + (currentUser === bet.creator ? bet.creatorOdds : bet.opponentOdds)))}</strong>
                                         </span>
@@ -754,12 +754,12 @@ const BettingPage: React.FC = () => {
                     <h3>How Odds-Based Betting Works</h3>
                     <ul>
                         <li>🎯 Create a bet with odds (e.g., 2:1, 3:1) - higher odds mean bigger potential payout</li>
-                        <li>📊 Choose bet type: Fireworks Race, Leaderboard Position, or Score Milestone</li>
+                        <li>📊 Choose bet type: Shamrocks Race, Leaderboard Position, or Score Milestone</li>
                         <li>🤝 Other users accept bets by matching the wager at your offered odds</li>
                         <li>🏆 Winners are determined automatically based on verifiable game stats</li>
                         <li>⚡ No honor system - the code calculates winners objectively!</li>
-                        <li>💡 Cancel open bets anytime to get your fireworks back</li>
-                        <li>🎲 Example: Bet 100 fireworks at 2x odds = win 300 if you win (100 + 200)</li>
+                        <li>💡 Cancel open bets anytime to get your shamrocks back</li>
+                        <li>🎲 Example: Bet 100 shamrocks at 2x odds = win 300 if you win (100 + 200)</li>
                     </ul>
                 </div>
             </div>

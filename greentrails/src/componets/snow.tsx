@@ -51,7 +51,7 @@ export default function Snow({
     particleCount = 120,
     speed = 1,
     size = 3,
-    color = "#FFD700", // Changed to gold for New Year's confetti
+    color = "#2E7D32", // St. Patrick's Day green
     zIndex = 9999,
 }: SnowProps) {
     // Constants for auto-clicker and spawn speed calculations
@@ -266,8 +266,8 @@ export default function Snow({
             const w = canvas.width / dprRef.current;
             const h = canvas.height / dprRef.current;
             const parts: Particle[] = [];
-            // New Year's confetti colors
-            const confettiColors = ['#FFD700', '#87CEEB', '#FFA500', '#FF69B4', '#00FF00', '#FF0000'];
+            // St. Patrick's Day confetti colors
+            const confettiColors = ['#2E7D32', '#4CAF50', '#66BB6A', '#FFD700', '#FFFFFF', '#81C784'];
             for (let i = 0; i < particleCount; i++) {
                 const r = Math.random() * size + Math.random() * (size / 2);
                 parts.push({
@@ -294,8 +294,8 @@ export default function Snow({
 
             ctx.clearRect(0, 0, w, h);
 
-            // draw confetti particles with rotating colors
-            const confettiColors = ['#FFD700', '#87CEEB', '#FFA500', '#FF69B4', '#00FF00', '#FF0000', '#FFFFFF'];
+            // draw St. Patrick's Day confetti particles with rotating colors
+            const confettiColors = ['#2E7D32', '#4CAF50', '#66BB6A', '#FFD700', '#FFFFFF', '#81C784', '#A5D6A7'];
             const parts = particlesRef.current;
             for (let i = 0; i < parts.length; i++) {
                 const p = parts[i];
@@ -363,7 +363,7 @@ export default function Snow({
                     ctx.restore();
                 } else {
                     // fallback: simple rectangle if image not ready
-                    ctx.fillStyle = s.isGolden ? "#FFD700" : "#87CEEB";
+                    ctx.fillStyle = s.isGolden ? "#FFD700" : "#4CAF50";
                     ctx.fillRect(drawX - (s.w / 2), drawY - (s.h / 2), s.w, s.h);
                 }
 
@@ -449,7 +449,7 @@ export default function Snow({
                 const vy = Math.sin(angle) * speed * (0.6 + Math.random() * 1.4) - Math.random() * 1.5;
                 const r = 1 + Math.random() * 3;
                 const life = 30 + Math.random() * 40; // frames
-                const c = colorHint || "#87CEEB"; // New Year's blue instead of Christmas red
+                const c = colorHint || "#4CAF50"; // St. Patrick's Day green
                 parts.push({
                     x,
                     y,
@@ -483,7 +483,7 @@ export default function Snow({
                 const r = Math.max(s.w, s.h) * 0.6; // hit radius
                 if (dx * dx + dy * dy <= r * r) {
                     // spawn explosion using firework's position and color based on type
-                    const explosionColor = s.isGolden ? "#FFD700" : "#87CEEB";
+                    const explosionColor = s.isGolden ? "#FFD700" : "#4CAF50";
                     spawnExplosion(s.x, s.y, explosionColor);
                     fireworks.splice(i, 1);
                     
@@ -532,7 +532,7 @@ export default function Snow({
                         console.log("No user logged in - firework pop not tracked");
                         // Show a one-time notification to inform user they need to login
                         if (!sessionStorage.getItem('loginReminderShown')) {
-                            showNotification('🎆 Login required! Go to the Sign Up page to login or create an account, then your Firework pops will be tracked on the leaderboard!', "info");
+                            showNotification('🍀 Login required! Go to the Sign Up page to login or create an account, then your Shamrock catches will be tracked on the leaderboard!', "info");
                             sessionStorage.setItem('loginReminderShown', 'true');
                         }
                     }

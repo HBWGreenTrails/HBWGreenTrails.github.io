@@ -8,18 +8,18 @@ type FlowersProps = {
 };
 
 const colors = [
-    "#FF69B4",
-    "#FF1493",
-    "#FFB6C1",
-    "#FF69B4",
-    "#ff6f6f",
-    "#d161f7",
-    "#8a61ff",
-    "#61d7ff",
-    "#61ff8a",
-    "#ff6161",
-    "#ff61d7",
-    "#d7ff61",
+    "#2E7D32",
+    "#4CAF50",
+    "#66BB6A",
+    "#81C784",
+    "#FFD700",
+    "#FFC107",
+    "#A5D6A7",
+    "#1B5E20",
+    "#388E3C",
+    "#FFD700",
+    "#FFFFFF",
+    "#43A047",
 ];
 
 export default function Flowers({
